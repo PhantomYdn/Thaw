@@ -18,7 +18,7 @@ import ru.ydn.thaw.ThawWebSession;
 import ru.ydn.wicket.wicketorientdb.utils.DBClosure;
 
 @MountPath("/register")
-public class RegisterPage extends ThawWebPage
+public class RegisterPage extends ThawWebPage<Object>
 {
 	public RegisterPage()
 	{

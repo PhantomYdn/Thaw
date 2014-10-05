@@ -8,12 +8,15 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import ru.ydn.thaw.ThawWebSession;
 import ru.ydn.wicket.wicketorientdb.model.ODocumentModel;
+import ru.ydn.wicket.wicketorientdb.utils.DBClosure;
 
+import com.orientechnologies.orient.core.db.record.ODatabaseRecord;
+import com.orientechnologies.orient.core.metadata.security.OUser;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 @MountPath("/survey")
 @AuthorizeInstantiation({"admin", "writer"})
-public class SurveyPage extends ThawWebPage<ODocument>
+public class SurveyPage extends DocumentThawWebPage
 {
 	private  class ResultLink extends Link<String>
 	{
@@ -32,7 +35,22 @@ public class SurveyPage extends ThawWebPage<ODocument>
 			ODocument fact = SurveyPage.this.getModelObject();
 			fact.field("result", getModelObject());
 			fact.save();
-			setResponsePage(new ThankPage(new ODocumentModel(ThawWebSession.get().getEngagement())));
+			ODocument thisEngagement = ThawWebSession.get().getEngagement();
+			new DBClosure<Boolean>() {
+
+				@Override
+				protected Boolean execute(ODatabaseRecord db) {
+					OUser oUser = ThawWebSession.get().getUser();
+					if(oUser!=null)
+					{
+						ODocument doc = oUser.getDocument();
+						doc.field("currentEngagementFact", (Object)null);
+						doc.save();
+					}
+					return true; 
+				}
+			}.execute();
+			setResponsePage(new ThankPage(new ODocumentModel(thisEngagement)));
 		}
 		
 	}

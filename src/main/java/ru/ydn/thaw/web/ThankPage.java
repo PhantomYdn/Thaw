@@ -5,12 +5,15 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.protocol.http.RequestUtils;
+import org.apache.wicket.request.Url;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 import ru.ydn.wicket.wicketorientdb.model.ODocumentPropertyModel;
 
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
-public class ThankPage extends ThawWebPage
+public class ThankPage extends DocumentThawWebPage
 {
 	public ThankPage(IModel<ODocument> model)
 	{
@@ -24,8 +27,10 @@ public class ThankPage extends ThawWebPage
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				super.onComponentTag(tag);
-				tag.put("text", "I did this"+nameModel.getObject());
-				tag.put("hashtags", aliasModel.getObject());
+				tag.put("data-text", "I did this"+nameModel.getObject());
+				tag.put("data-hashtags", aliasModel.getObject());
+				
+				tag.put("data-url", RequestCycle.get().getUrlRenderer().renderFullUrl(Url.parse("/")));
 			}
 			
 		});

@@ -18,7 +18,7 @@ import com.orientechnologies.orient.core.id.ORecordId;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 @MountPath("/tips/${rid}")
-public class TipsPage extends ThawWebPage<ODocument>
+public class TipsPage extends DocumentThawWebPage
 {
 	public TipsPage(IModel<ODocument> engModel)
 	{

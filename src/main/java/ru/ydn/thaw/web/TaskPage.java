@@ -1,6 +1,8 @@
 package ru.ydn.thaw.web;
 
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -8,6 +10,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ru.ydn.thaw.ThawWebSession;
@@ -17,7 +20,7 @@ import ru.ydn.wicket.wicketorientdb.model.ODocumentPropertyModel;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 @MountPath("/task")
-public class TaskPage extends ThawWebPage<ODocument>
+public class TaskPage extends DocumentThawWebPage
 {
 	public TaskPage(IModel<ODocument> taskModel)
 	{
@@ -41,6 +44,22 @@ public class TaskPage extends ThawWebPage<ODocument>
 					}
 				
 				});
+		add(new WebMarkupContainer("tweets")
+		{
+			@Override
+			protected void onComponentTag(ComponentTag tag) {
+				super.onComponentTag(tag);
+				String widget = getModelObject().field("widget");
+				String hashtag = getModelObject().field("alias");
+				tag.put("href", "https://twitter.com/hashtag/"+hashtag);
+				tag.put("data-list-slug", "#"+hashtag);
+				if(Strings.isEmpty(widget))
+				{
+					tag.put("data-widget-id", widget);
+				}
+			}
+			
+		});
 	}
 	
 	public TaskPage()
