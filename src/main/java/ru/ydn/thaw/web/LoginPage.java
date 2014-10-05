@@ -18,7 +18,9 @@ public class LoginPage extends ThawWebPage<Object>
 	public LoginPage()
 	{
 		super();
-		add(new SignInPanel("signInPanel", false));
+		SignInPanel signinPanel = new SignInPanel("signInPanel", false);
+		signinPanel.setRememberMe(false);
+		add(signinPanel);
 	}
 
 	@Override

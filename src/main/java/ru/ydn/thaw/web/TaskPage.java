@@ -1,5 +1,6 @@
 package ru.ydn.thaw.web;
 
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -11,6 +12,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.util.time.Duration;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import ru.ydn.thaw.ThawWebSession;
@@ -28,7 +30,8 @@ public class TaskPage extends DocumentThawWebPage
 		add(new Label("name", new ODocumentPropertyModel<String>(taskModel, "name")));
 		add(new Label("description", new ODocumentPropertyModel<String>(taskModel, "description")));
 		add(new Label("content", new ODocumentPropertyModel<String>(taskModel, "content")));
-		add(new Label("count", new ODocumentPropertyModel<String>(taskModel, "count")));
+		add(new Label("count", new ODocumentPropertyModel<String>(taskModel, "count"))
+				.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(3)))); 
 		add(new Link<ODocument>("doneLink") {
 
 			@Override
@@ -53,7 +56,7 @@ public class TaskPage extends DocumentThawWebPage
 				String hashtag = getModelObject().field("alias");
 				tag.put("href", "https://twitter.com/hashtag/"+hashtag);
 				tag.put("data-list-slug", "#"+hashtag);
-				if(Strings.isEmpty(widget))
+				if(!Strings.isEmpty(widget))
 				{
 					tag.put("data-widget-id", widget);
 				}

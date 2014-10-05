@@ -3,6 +3,7 @@ package ru.ydn.thaw.web;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.RequestUtils;
@@ -27,12 +28,13 @@ public class ThankPage extends DocumentThawWebPage
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				super.onComponentTag(tag);
-				tag.put("data-text", "I did this"+nameModel.getObject());
-				tag.put("data-hashtags", aliasModel.getObject());
+				tag.put("data-text", "I did this "+nameModel.getObject());
+				tag.put("data-hashtags", "thaw,"+aliasModel.getObject());
 				
 				tag.put("data-url", RequestCycle.get().getUrlRenderer().renderFullUrl(Url.parse("/")));
 			}
 			
 		});
+		add(new BookmarkablePageLink<Object>("profileLink", ProfilePage.class));
 	}
 }

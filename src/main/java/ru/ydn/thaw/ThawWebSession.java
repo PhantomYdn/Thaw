@@ -86,6 +86,10 @@ public class ThawWebSession extends OrientDbWebSession
 					ODocument user = getUser().getDocument();
 					user.field("currentEngagementFact", engagementFactForGuest);
 					user.save();
+					engagementFactForGuest.reload();
+					engagementFactForGuest.field("user", user);
+					engagementFactForGuest.save();
+					engagementFactForGuest = null;
 					return true;
 				}
 			}.execute();

@@ -1,8 +1,13 @@
 <wicket:extend>
-		<h3 class="ng-scope">How'd it go?</h3>
-		<a href="/complete" class="btn btn-default ng-scope" wicket:id="goodLink">Good</a><br
-			class="ng-scope">
-		<a href="/complete" class="btn btn-default ng-scope" wicket:id="okLink">Ok</a><br
-			class="ng-scope">
-		<a href="/complete" class="btn btn-default ng-scope" wicket:id="badLink">Bad</a>
+		<form wicket:id="form">
+			<h3 class="ng-scope">How'd it go?</h3>
+			<p>Share with us your feedback!</p>
+			<textarea wicket:id="feedback" style="width:100%" rows="5">
+			</textarea>
+			<a href="/complete" class="btn btn-default ng-scope" wicket:id="goodLink">Good</a><br
+				class="ng-scope">
+			<a href="/complete" class="btn btn-default ng-scope" wicket:id="okLink">Ok</a><br
+				class="ng-scope">
+			<a href="/complete" class="btn btn-default ng-scope" wicket:id="badLink">Bad</a>
+		</form>
 </wicket:extend>
